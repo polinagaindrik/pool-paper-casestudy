@@ -4,12 +4,6 @@ Case study for the pool model paper. It contains parameter estimation, model
 selection and profile likelihood code for a bacterial co-culture ODE model,
 with and without pH influence.
 
-The code was originally part of
-[fusion_model](https://github.com/polinagaindrik/fusion_model). It now runs on
-its own: `pool_paper_casestudy/fusion_core` contains the small set of
-`fusion_model` functions the case study needs, so neither `fusion_model` nor
-`pybis` has to be installed.
-
 ## Setup
 
 ```bash
