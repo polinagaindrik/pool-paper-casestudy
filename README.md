@@ -1,4 +1,4 @@
-# pool-paper-casestudy
+# ODE Pool Framework: Case Study
 
 Case study for the pool model paper. It contains parameter estimation, model
 selection and profile likelihood code for a bacterial co-culture ODE model,
