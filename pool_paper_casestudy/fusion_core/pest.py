@@ -20,7 +20,7 @@ from . import dtf as _dtf
 # Path the optimization progress (iteration, parameters, cost) is appended to
 # by `_callback_ll` on every generation of the global optimizer. Matches the
 # path used by the original `fusion_model.parameter_estimation.optimization`.
-output_file = 'out/optimization_history1.csv'
+output_file = 'pool_paper_casestudy/out/optimization_history1.csv'
 
 # Keeps a copy of (x, fun) for every callback invocation, exactly like the
 # original module-level list in fusion_model.

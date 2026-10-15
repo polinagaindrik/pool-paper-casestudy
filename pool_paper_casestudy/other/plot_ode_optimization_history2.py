@@ -152,7 +152,7 @@ if __name__ == "__main__":
     n_cl = 4
     relnoise = 0.
 
-    #path = 'out/'
+    #path = 'pool_paper_casestudy/out/'
     #path2 = 'pool_paper_casestudy/out/test2/'
     path = 'pool_paper_casestudy/out/all_sepexps_withpH_Chrderiv/'
     path2 = 'pool_paper_casestudy/out/all_sepexps_withpH_Chrderiv/'

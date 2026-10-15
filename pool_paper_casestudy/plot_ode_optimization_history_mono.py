@@ -11,7 +11,7 @@ if __name__ == "__main__":
     n_cl = 4
     relnoise = 0.
 
-    path = 'out/'
+    path = 'pool_paper_casestudy/out/'
     path2 = "pool_paper_casestudy/out/with_pH/"
     add_name = ''
     model = ode_model_coculture_withpH_MM

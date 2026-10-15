@@ -96,7 +96,7 @@ def data_calibration_poolpaper_sequen(dfs, path=""):
         x0_vals[i] = param_opt[:n_cl]
         dicts_param[i] = get_extract_params_from_mono_exp(param_opt[n_cl:], i)
 
-        df_optim2 = pd.read_csv('out/optimization_history1.csv')
+        df_optim2 = pd.read_csv('pool_paper_casestudy/out/optimization_history1.csv')
         fm.plotting.plot_cost_function(df_optim2, path=path, add_name=f'_V{i+1:02d}')
 
     # Estimation of x0 for coculture ls23K and Lm
@@ -136,7 +136,7 @@ def data_calibration_poolpaper_sequen(dfs, path=""):
     print("Start optimization Ls23K-Lm")
     param_opt = calculate_model_params(cost, calibr_setup)[0]
     x0_vals[3] = param_opt[:n_cl]
-    df_optim2 = pd.read_csv('out/optimization_history1.csv')
+    df_optim2 = pd.read_csv('pool_paper_casestudy/out/optimization_history1.csv')
     fm.plotting.plot_cost_function(df_optim2, path=path, add_name=f'_V04')
 
 ####################################################
@@ -181,7 +181,7 @@ def data_calibration_poolpaper_sequen(dfs, path=""):
     x0_vals_final = np.array([x0_vals[i] for i in range (5)]).flatten()
     param_final = np.concatenate((x0_vals_final, param_opt[n_cl:]))
     fm.output.json_dump({"param_ode": param_final.astype(list)}, "Result_calibration.json", dir=path)
-    df_optim2 = pd.read_csv('out/optimization_history1.csv')
+    df_optim2 = pd.read_csv('pool_paper_casestudy/out/optimization_history1.csv')
     fm.plotting.plot_cost_function(df_optim2, path=path, add_name=f'_V05')
     return param_final, calibr_setup
 

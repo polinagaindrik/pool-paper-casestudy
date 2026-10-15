@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Experimental data and results are not distributed with this repository
+pool_paper_casestudy/data/*
+!pool_paper_casestudy/data/.gitkeep
+pool_paper_casestudy/out/*
+!pool_paper_casestudy/out/.gitkeep
