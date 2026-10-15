@@ -18,6 +18,9 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+The code was developed with Python 3.11. To reproduce the exact environment
+used for the paper, install `requirements-lock.txt` instead.
+
 ## Data
 
 The experimental data is **not** included in this repository. To run the
