@@ -35,12 +35,14 @@ def set_initial_vals(x10, temps, n_cl, pH0=6.):
 
 
 def observable(t, x):
+    """Convert ODE states into the measured bacterial, toxin, and acid outputs."""
     n = np.array([x[0] + x[1], x[2] + x[3]])
     obs = np.concatenate((n, x[5:]))  # mb add pH
     return obs
 
 
 def pH_func(t, pH_series):
+    """Return the pH measurement nearest to time `t`."""
     # pH_series = [[pH1, t1], [pH2, t2], [pH3, t3], ...] (n_times x 2)
     pH_arr, time_arr = np.array(pH_series).T
     diff = time_arr - t
@@ -76,6 +78,7 @@ def interpolate_series(t, pH_series):
 
 
 def ode_model_coculture(t, x, param, x0, ode_args):
+    """Compute state derivatives for the original pH-dependent co-culture model."""
     (x_ls23K0, x_lsCTC4940, x_lm_sen0, x_lm_res0, R0, T0, LA0, pH0) = x0
     (x_ls23K, x_lsCTC494, x_lm_sen, x_lm_res, R, T, LA, _) = x
 
@@ -119,6 +122,7 @@ def ode_model_coculture(t, x, param, x0, ode_args):
 
 
 def ode_model_coculture2(t, x, param, x0, ode_args):
+    """Compute derivatives for the co-culture model with strain-specific growth."""
     #(x_ls23K0, x_lsCTC4940, x_lm_sen0, x_lm_res0, R0, T0, LA0, pH0) = x0
     (x_ls23K, x_lsCTC494, x_lm_sen, x_lm_res, R, T, LA, pH) = x
 
@@ -160,6 +164,7 @@ def ode_model_coculture2(t, x, param, x0, ode_args):
 
 
 def ode_model_coculture3(t, x, param, x0, ode_args):
+    """Compute derivatives for the co-culture model with strain-specific yields."""
     #(x_ls23K0, x_lsCTC4940, x_lm_sen0, x_lm_res0, R0, T0, LA0, pH0) = x0
     (x_ls23K, x_lsCTC494, x_lm_sen, x_lm_res, R, T, LA, pH) = x
 
@@ -203,6 +208,7 @@ def ode_model_coculture3(t, x, param, x0, ode_args):
 
 
 def ode_model_coculture_wopH(t, x, param, x0, ode_args):
+    """Compute derivatives for the co-culture model with fixed growth rates."""
     #(x_ls23K0, x_lsCTC4940, x_lm_sen0, x_lm_res0, R0, T0, LA0, pH0) = x0
     (x_ls23K, x_lsCTC494, x_lm_sen, x_lm_res, R, T, LA, pH) = x
 
@@ -269,6 +275,7 @@ def ode_model_coculture_wopH_expsat(t, x, param, x0, ode_args):
 
 
 def ode_model_coculture_wopH_MM(t, x, param, x0, ode_args):
+    """Compute derivatives using Michaelis-Menten toxin-mediated death."""
     (x_ls23K, x_lsCTC494, x_lm_sen, x_lm_res, R, T, LA, pH) = x
 
     (mu_ls23K, mu_lsCTC494, mu_lm,
@@ -306,6 +313,7 @@ def ode_model_coculture_wopH_MM(t, x, param, x0, ode_args):
 
 
 def ode_model_coculture_withpH_MM(t, x, param, x0, ode_args):
+    """Compute derivatives with interpolated pH-dependent growth and MM death."""
     #(x_ls23K0, x_lsCTC4940, x_lm_sen0, x_lm_res0, R0, T0, LA0, pH0) = x0
     (x_ls23K, x_lsCTC494, x_lm_sen, x_lm_res, R, T, LA, pH) = x
 
@@ -350,6 +358,7 @@ def ode_model_coculture_withpH_MM(t, x, param, x0, ode_args):
 
 
 def sq_diff_oneexp(calibr_setup, exp, i, n_cl, x0, param_ode, x_max):
+    """Calculate normalized squared residuals for one experiment."""
     # TODO mb: do we need to fit also data for BAC, LA (pH)
     # Then obs_x -> obs_x+m
     # + pH instead of temp?
@@ -375,6 +384,7 @@ def sq_diff_oneexp(calibr_setup, exp, i, n_cl, x0, param_ode, x_max):
 
 
 def cost(param, calibr_setup, jac_spasity):
+    """Evaluate the aggregated model residual cost across experiments."""
     n_cl = calibr_setup["n_cl"]
     exps = calibr_setup["exps"]
     n_exps = len(exps)

@@ -13,6 +13,7 @@ from pydantic.json import custom_pydantic_encoder
 
 
 def _get_encoder(calibr_result):
+    """Build a JSON fallback encoder for supported NumPy and Pydantic values."""
     encoders = {
         np.ndarray: lambda x: x.tolist(),
         np.int32: lambda x: str(x),
@@ -42,6 +43,7 @@ def read_from_json(filename, dir=''):
 
 
 def save_values_each_experiment(vals_opt, exps, n_cl, dir='', filename=''):
+    """Group optimized values by experiment and write them to a JSON file."""
     vals_dict = {}
     for i, exp in enumerate(exps):
         vals_dict[exp] = vals_opt[n_cl * i:n_cl * (i + 1)]

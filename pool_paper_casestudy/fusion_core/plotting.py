@@ -70,6 +70,7 @@ plt.rc('ytick', labelsize=13)
 
 
 def set_labels(fig, ax, xlabel, y_label):
+    """Apply the package's standard axis-label and tick styling."""
     ax.set_xlabel(xlabel, fontsize=15)
     ax.tick_params(labelsize=13)
     ax.set_ylabel(y_label, fontsize=15)
@@ -78,6 +79,7 @@ def set_labels(fig, ax, xlabel, y_label):
 
 ########### pH(LA) # function
 def pH_LA_dependence(days, LA_data, pH_data, add_name='', path=''):
+    """Plot measured and acid-derived pH values, returning the derived series."""
     pH0 = pH_data[0]
     K_a = 1.38*10**(-4)
     pH = pH0 + np.log(- K_a + np.sqrt(K_a**2 + 4 * K_a*LA_data)/2)
@@ -94,6 +96,7 @@ def pH_LA_dependence(days, LA_data, pH_data, add_name='', path=''):
 
 ############## Plotting ######################
 def plot_all_curves(param_ode, x10, model=None, obs=None, data=None, path='', add_name=''):
+    """Simulate and plot model trajectories alongside available observations."""
     if model is None:
         model = mdl.ode_model_coculture
     if obs is None:
@@ -144,6 +147,7 @@ def plot_all_curves(param_ode, x10, model=None, obs=None, data=None, path='', ad
 
 ######
 def plot_cases_separately(param_opt, dfs, model, path='', add_name='', exp_indexes=[0, 1, 2, 3, 4]):
+    """Plot model fits and observations in separate panels for selected experiments."""
     n_cl = 4
     names = ['Ls23K', 'LsCTC494', 'LmCTC1034', 'Ls23K-LmCTC1034', 'LsCTC494-LmCTC1034']
     n_exps = len(names)

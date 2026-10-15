@@ -26,6 +26,7 @@ def save_all_dfs(dfs, names=[''], path=''):
 
 ########### In-silico data generation ############
 def data_generation_poolpaper(n_cl, param_ode, x10, times, path=''):
+    """Generate and return the pool-paper in-silico dataset."""
     dfs_ode = []
     add_name = ''
     temps = [2.,]
@@ -36,6 +37,7 @@ def data_generation_poolpaper(n_cl, param_ode, x10, times, path=''):
 
 
 def model_wotemp(n_cl, temps, ntr, times, param_ode=None, x10=None, path='', add_name='', exp_start_offset=0):
+    """Simulate the model for the supplied conditions and save its outputs."""
     np.random.seed(46987)
     t = times
     if param_ode is None:
@@ -51,6 +53,7 @@ def model_wotemp(n_cl, temps, ntr, times, param_ode=None, x10=None, path='', add
 
 
 def generate_data_dfs(model, t, param, x0, temps, n_cl, n_traj=1, exp_start_offset=0):
+    """Simulate each condition and combine the trajectories into dataframes."""
     df_ode = []
     for j, temp in enumerate(temps):
         exp_start = exp_start_offset + 1 + j
@@ -66,6 +69,7 @@ def generate_data_dfs(model, t, param, x0, temps, n_cl, n_traj=1, exp_start_offs
 
 ############### Read data from excel ######################
 def experimental_values(name, skiprows=0, path_data='', LA_sheetname='', path='', exp_start_offset=0):
+    """Load pool-paper measurements from Excel and save them as a dataframe."""
     filename = 'CCD_results_counts_Part 2.xlsx'
     df_counts = pd.read_excel(path_data + filename, keep_default_na=True, sheet_name='R9_rep', skiprows=skiprows, usecols='A:F', nrows=16)
     # TODO: temporal solution to round all t to the round number: maybe not accurate: what else to do?
@@ -114,8 +118,7 @@ def experimental_values(name, skiprows=0, path_data='', LA_sheetname='', path=''
 
 
 def get_param_dfs(path, path2):
-    """Re-load a previous run's optimization-history CSV (best/last row of
-    parameters) together with its saved dataframe of experimental data."""
+    """Load the last optimization parameters, saved data, and history CSV."""
     optim_file2 = "optimization_history1.csv"
     df_optim2 = pd.read_csv(path+optim_file2)
     param_opt = df_optim2.T[df_optim2.T.columns[-1]].values[1:-1]

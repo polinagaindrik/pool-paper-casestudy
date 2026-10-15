@@ -76,6 +76,7 @@ def time_limit(seconds):
         return
 
     def _handler(signum, frame):
+        """Raise the timeout exception when the alarm signal is received."""
         raise _SolveTimeout(f"solve exceeded {seconds}s")
 
     old_handler = signal.signal(signal.SIGALRM, _handler)
@@ -110,6 +111,7 @@ def _cost_fixed_param(free_params, cost_func, fixed_index, fixed_value, calibr_s
 
 
 def _build_grid(param_opt, param_index, param_bnds, span, n_points):
+    """Create a bounded scan grid around an estimate, including the estimate."""
     p_opt_val = param_opt[param_index]
     lo, hi = param_bnds[param_index]
     if hi <= lo:
@@ -208,6 +210,7 @@ _G_RNG = None
 
 
 def _pool_init(cost_func, param_opt, calibr_setup, jac_spasity, method, per_point_workers, n_restarts=1, jitter_frac=0.05):
+    """Initialize shared profile-fit inputs and a per-process random generator."""
     global _G_COST_FUNC, _G_PARAM_OPT, _G_CALIBR_SETUP, _G_JAC, _G_METHOD, _G_PER_POINT_WORKERS
     global _G_N_RESTARTS, _G_JITTER_FRAC, _G_RNG
     _G_COST_FUNC = cost_func
@@ -223,6 +226,7 @@ def _pool_init(cost_func, param_opt, calibr_setup, jac_spasity, method, per_poin
 
 
 def _pool_task(task):
+    """Optimize the free parameters for one fixed parameter-grid point."""
     param_index, val = task
     best_cost, full_p = _optimize_one_point(
         _G_COST_FUNC, param_index, val, _G_PARAM_OPT, _G_CALIBR_SETUP, _G_JAC, _G_METHOD, _G_PER_POINT_WORKERS,
@@ -233,6 +237,7 @@ def _pool_task(task):
 
 
 def _pool_task_with_timeout(task, timeout=60):
+    """Run one grid-point optimization in a child process with a time limit."""
     param_index, val = task
     with concurrent.futures.ProcessPoolExecutor(max_workers=1) as ex:
         future = ex.submit(
@@ -345,6 +350,7 @@ def count_data_points(cost_func, param, calibr_setup, jac_spasity=None):
     counts = {}
 
     def _counting_aggregation(J_vect):
+        """Count finite real-data residuals while returning the usual scalar cost."""
         ll_x = np.asarray(J_vect[0])
         counts["n_data"] = int(np.size(ll_x[~np.isnan(ll_x)])) if ll_x.size else 0
         # still return a real number so cost_func() doesn't error downstream
@@ -493,6 +499,7 @@ def _make_progress_printer(total, step_pct=10):
     state = {"done": 0, "next_threshold": step_pct}
 
     def _report():
+        """Print progress after each task when the next percentage threshold is met."""
         state["done"] += 1
         pct = 100 * state["done"] / total
         if pct >= state["next_threshold"]:
